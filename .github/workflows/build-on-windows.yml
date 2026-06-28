@@ -213,7 +213,7 @@ jobs:
             --preset ${{ matrix.config.preset }} ^
             -B "%BUILD_DIR%" ^
             -DENABLE_FIFEGUI=ON ^
-            -DBUILD_PYTHON_BINDINGS=OFF ^
+            -DBUILD_PYTHON_BINDINGS=ON ^
             -DBUILD_LIBRARY=ON ^
             -DCMAKE_PREFIX_PATH="%DEPS_DIR%\install;%VCPKG_INSTALLED_DIR%\${{ matrix.config.triplet }}" ^
             -DCMAKE_TOOLCHAIN_FILE="%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake" ^
