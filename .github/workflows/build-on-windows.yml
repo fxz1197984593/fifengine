@@ -236,19 +236,21 @@ jobs:
           cmake --install ${{ env.BUILD_DIR }} --prefix ${{ env.INSTALL_DIR }}
       - name: 📋 3.4 Collect all DLLs
         run: |
-          :: 复制 vcpkg 安装的所有 DLL
           xcopy /s /y /i "%VCPKG_INSTALLED_DIR%\${{ matrix.config.triplet }}\bin\*.dll" "%INSTALL_DIR%\bin\"
-
-          :: 复制 build 目录中的 fifengine.dll 和 _fife_swig.pyd
           xcopy /s /y "%BUILD_DIR%\bin\*.dll" "%INSTALL_DIR%\bin\"
           xcopy /s /y "%BUILD_DIR%\bin\*.pyd" "%INSTALL_DIR%\bin\"
-
-          :: 复制 deps 目录中的 DLL（fifechan 等）
           xcopy /s /y "%DEPS_DIR%\install\bin\*.dll" "%INSTALL_DIR%\bin\"
-
-          :: 列出最终收集到的所有文件
           dir "%INSTALL_DIR%\bin\*.dll"
           dir "%INSTALL_DIR%\bin\*.pyd"
+      # ==============================
+
+      - name: ❔ CHECK important folders
+        run: |
+          dir ${{ env.BUILD_DIR }}
+          dir ${{ env.INSTALL_DIR }}
+
+      - name: 🔼 Upload build artifacts
+        uses: actions/upload-artifact@v7
 
       - name: ❔ CHECK important folders, to see if everything is present (after building)
         run: |
